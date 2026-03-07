@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home — QIU Lost &amp; Found</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+  <!-- ─── NAVBAR ─────────────────────────────────── -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="/home.html" class="nav-brand" style="text-decoration:none">
+        <div class="nav-brand-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+          </svg>
+        </div>
+        QIU Lost &amp; Found
+      </a>
+
+      <button class="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul class="nav-links">
+        <li><a href="/home.html"   class="active">Home</a></li>
+        <li><a href="/report.html">Report Item</a></li>
+        <li><a href="/lost.html">Lost Items</a></li>
+        <li><a href="/found.html">Found Items</a></li>
+      </ul>
+
+      <div class="nav-user">
+        <span class="nav-user-name" id="nav-user-name"></span>
+        <button class="btn btn-outline btn-sm" id="logout-btn" style="color:white;border-color:rgba(255,255,255,.35)">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ─── HERO ────────────────────────────────────── -->
+  <section class="hero">
+    <div class="container">
+      <h1>Campus Lost &amp; Found System</h1>
+      <p>Report lost items, browse found items, and help reunite the QIU community with their belongings.</p>
+      <div class="hero-actions">
+        <a href="/report.html?type=lost"  class="btn btn-accent">🔍 Report Lost Item</a>
+        <a href="/report.html?type=found" class="btn btn-outline" style="color:white;border-color:rgba(255,255,255,.5)">📦 Report Found Item</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── LIVE STATS ───────────────────────────────── -->
+  <div class="stats-bar">
+    <div class="container">
+      <div class="stat-item">
+        <div class="stat-num" id="stat-lost">—</div>
+        <div class="stat-label">Active Lost Reports</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" id="stat-found">—</div>
+        <div class="stat-label">Found Items</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" id="stat-resolved">—</div>
+        <div class="stat-label">Resolved / Claimed</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── INFO BLOCKS ──────────────────────────────── -->
+  <div class="container">
+    <div class="info-grid">
+
+      <div class="info-block">
+        <div class="info-icon icon-blue">🔍</div>
+        <h3>Submit a Lost Report</h3>
+        <p>Fill in details about what you lost — title, description, category, location, and date. The community can then help identify your item.</p>
+      </div>
+
+      <div class="info-block">
+        <div class="info-icon icon-green">📦</div>
+        <h3>Report a Found Item</h3>
+        <p>Found something on campus? Post it here so the owner can contact you. Every item found is one reunion waiting to happen.</p>
+      </div>
+
+      <div class="info-block">
+        <div class="info-icon icon-amber">✏️</div>
+        <h3>Track &amp; Update Status</h3>
+        <p>Update your report status to "Claimed" or "Resolved" once the item is returned. Keeps the board clean and up-to-date.</p>
+      </div>
+
+      <div class="info-block">
+        <div class="info-icon icon-red">🔒</div>
+        <h3>Secure &amp; Private</h3>
+        <p>Your contact details are only visible to logged-in users. All data is validated and sanitized to prevent misuse.</p>
+      </div>
+
+    </div>
+
+    <!-- ─── ADVICE SECTION ─────────────────────────── -->
+    <div class="section">
+      <h2 class="section-title">Helpful Advice</h2>
+
+      <div class="tip-block">
+        <strong>💡 Reporting a Lost Item</strong>
+        Be as specific as possible — include a unique description (scratches, stickers, serial number), the exact location where you last had it, and the approximate time. The more detail, the easier it is to match.
+      </div>
+
+      <div class="tip-block" style="border-color:var(--success);background:#f0fdf4;color:#14532d;margin-top:.85rem">
+        <strong>✅ What To Do When You Find Something</strong>
+        Hand the item to the security office OR post it here immediately. Do not keep found items for more than 24 hours. Update the status to "Claimed" once the owner collects it.
+      </div>
+
+      <div class="tip-block" style="border-color:var(--warning);background:#fffbeb;color:#78350f;margin-top:.85rem">
+        <strong>⚠️ Claiming an Item</strong>
+        To claim an item, contact the person who reported it via the contact information listed. The security office may ask you to provide proof of ownership before releasing any item.
+      </div>
+    </div>
+
+    <!-- ─── RECENT ITEMS PREVIEW ───────────────────── -->
+    <div class="section">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;padding-bottom:.6rem;border-bottom:2px solid var(--border)">
+        <h2 style="margin:0;border:none;padding:0">Recent Reports</h2>
+        <a href="/lost.html" class="btn btn-outline btn-sm">View All →</a>
+      </div>
+      <div id="recent-items">
+        <div class="spinner"></div>
+      </div>
+    </div>
+
+  </div><!-- /container -->
+
+  <script src="/js/app.js"></script>
+  <script>
+    Auth.redirectIfLoggedOut();
+    initNavbar();
+
+    async function loadStats() {
+      const res = await API.get('/items');
+      if (!res.ok) return;
+
+      const items    = res.data.data;
+      const lost     = items.filter(i => i.type === 'lost' && i.status === 'active').length;
+      const found    = items.filter(i => i.type === 'found').length;
+      const resolved = items.filter(i => i.status === 'claimed' || i.status === 'resolved').length;
+
+      document.getElementById('stat-lost').textContent     = lost;
+      document.getElementById('stat-found').textContent    = found;
+      document.getElementById('stat-resolved').textContent = resolved;
+
+      // Show 6 most recent items
+      const recent = items.slice(0, 6);
+      const grid   = document.getElementById('recent-items');
+
+      if (recent.length === 0) {
+        grid.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><h3>No reports yet</h3><p>Be the first to submit a report.</p></div>`;
+        return;
+      }
+
+      grid.innerHTML = `<div class="items-grid">${recent.map(renderCard).join('')}</div>`;
+    }
+
+    function renderCard(item) {
+      return `
+        <div class="item-card">
+          <div class="item-card-header">
+            <div>
+              <div class="item-title">${escHtml(item.title)}</div>
+              <div style="margin-top:.3rem;display:flex;gap:.4rem;flex-wrap:wrap">
+                ${typeBadge(item.type)}
+                ${statusBadge(item.status)}
+              </div>
+            </div>
+          </div>
+          <div class="item-card-body">
+            <div class="item-desc">${escHtml(item.description)}</div>
+            <div class="item-meta">
+              <div class="item-meta-item">📍 ${escHtml(item.location)}</div>
+              <div class="item-meta-item">📅 ${fmtDate(item.date_occurred)}</div>
+              <div class="item-meta-item">🏷️ ${escHtml(item.category)}</div>
+            </div>
+          </div>
+          <div class="item-card-footer">
+            <span style="font-size:.78rem;color:var(--muted)">by ${escHtml(item.reporter_name)}</span>
+          </div>
+        </div>`;
+    }
+
+    loadStats();
+  </script>
+</body>
+</html>

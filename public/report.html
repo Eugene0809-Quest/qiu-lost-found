@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Report Item — QIU Lost &amp; Found</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="/home.html" class="nav-brand" style="text-decoration:none">
+        <div class="nav-brand-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+          </svg>
+        </div>
+        QIU Lost &amp; Found
+      </a>
+      <button class="hamburger"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="/home.html">Home</a></li>
+        <li><a href="/report.html" class="active">Report Item</a></li>
+        <li><a href="/lost.html">Lost Items</a></li>
+        <li><a href="/found.html">Found Items</a></li>
+      </ul>
+      <div class="nav-user">
+        <span class="nav-user-name" id="nav-user-name"></span>
+        <button class="btn btn-outline btn-sm" id="logout-btn" style="color:white;border-color:rgba(255,255,255,.35)">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="container">
+      <h1 id="page-title">Submit a Report</h1>
+      <p id="page-subtitle">Fill in the details below to submit your lost or found item report.</p>
+    </div>
+  </div>
+
+  <div class="container" style="max-width:700px;padding-bottom:3rem">
+
+    <!-- TYPE SELECTOR -->
+    <div class="card" style="margin-bottom:1.25rem">
+      <div class="card-body">
+        <p style="font-weight:500;margin-bottom:.75rem">What are you reporting?</p>
+        <div style="display:flex;gap:.75rem">
+          <label style="flex:1;cursor:pointer">
+            <input type="radio" name="type" id="type-lost" value="lost" style="display:none" />
+            <div class="type-btn" id="btn-lost" onclick="setType('lost')"
+              style="border:2px solid var(--border);border-radius:8px;padding:.9rem;text-align:center;transition:.2s">
+              <div style="font-size:1.5rem">🔍</div>
+              <div style="font-weight:600;margin-top:.3rem">I Lost Something</div>
+              <div style="font-size:.8rem;color:var(--muted)">Report a missing item</div>
+            </div>
+          </label>
+          <label style="flex:1;cursor:pointer">
+            <input type="radio" name="type" id="type-found" value="found" style="display:none" />
+            <div class="type-btn" id="btn-found" onclick="setType('found')"
+              style="border:2px solid var(--border);border-radius:8px;padding:.9rem;text-align:center;transition:.2s">
+              <div style="font-size:1.5rem">📦</div>
+              <div style="font-weight:600;margin-top:.3rem">I Found Something</div>
+              <div style="font-size:.8rem;color:var(--muted)">Post a found item</div>
+            </div>
+          </label>
+        </div>
+        <div class="form-error" id="type-err" style="margin-top:.4rem"></div>
+      </div>
+    </div>
+
+    <!-- ITEM DETAILS -->
+    <div class="card">
+      <div class="card-header">
+        <h2 style="font-size:1rem;margin:0">Item Details</h2>
+      </div>
+      <div class="card-body">
+
+        <div class="form-group">
+          <label for="f-title">Item Title <span style="color:red">*</span></label>
+          <input type="text" id="f-title" placeholder="e.g. Blue Casio calculator, Student ID card" maxlength="200" />
+          <div class="form-error" id="f-title-err"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="f-category">Category <span style="color:red">*</span></label>
+          <select id="f-category">
+            <option value="">Select a category…</option>
+            <option>Electronics</option>
+            <option>Clothing</option>
+            <option>Accessories</option>
+            <option>Books &amp; Stationery</option>
+            <option>ID &amp; Cards</option>
+            <option>Keys</option>
+            <option>Bags</option>
+            <option>Sports Equipment</option>
+            <option>Other</option>
+          </select>
+          <div class="form-error" id="f-category-err"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="f-description">Description <span style="color:red">*</span></label>
+          <textarea id="f-description" placeholder="Describe the item in detail — colour, brand, model, any unique marks, etc." maxlength="2000"></textarea>
+          <div class="form-hint">The more detail you provide, the easier it is to identify the item.</div>
+          <div class="form-error" id="f-description-err"></div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="f-location">Location <span style="color:red">*</span></label>
+            <input type="text" id="f-location" placeholder="e.g. Block A, Level 2 Library" maxlength="250" />
+            <div class="form-hint" id="location-hint">Where you lost it.</div>
+            <div class="form-error" id="f-location-err"></div>
+          </div>
+          <div class="form-group">
+            <label for="f-date">Date <span style="color:red">*</span></label>
+            <input type="date" id="f-date" />
+            <div class="form-error" id="f-date-err"></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="f-time">Approximate Time <span style="color:var(--muted);font-weight:400">(optional)</span></label>
+          <input type="time" id="f-time" />
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CONTACT INFO -->
+    <div class="card" style="margin-top:1.25rem">
+      <div class="card-header">
+        <h2 style="font-size:1rem;margin:0">Your Contact Information</h2>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <label for="f-contact-name">Your Name <span style="color:red">*</span></label>
+          <input type="text" id="f-contact-name" placeholder="Full name" maxlength="100" />
+          <div class="form-error" id="f-contact-name-err"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="f-contact-email">Email <span style="color:red">*</span></label>
+            <input type="email" id="f-contact-email" placeholder="you@example.com" />
+            <div class="form-error" id="f-contact-email-err"></div>
+          </div>
+          <div class="form-group">
+            <label for="f-contact-phone">Phone <span style="color:var(--muted);font-weight:400">(optional)</span></label>
+            <input type="tel" id="f-contact-phone" placeholder="+60 12-345 6789" />
+            <div class="form-error" id="f-contact-phone-err"></div>
+          </div>
+        </div>
+
+        <div class="tip-block">
+          <strong>ℹ️ Privacy Note</strong>
+          Your contact details are only visible to logged-in QIU users. They are used so the owner or finder can reach you directly.
+        </div>
+
+        <div class="form-error" id="form-general-err" style="margin:.75rem 0"></div>
+
+        <div style="display:flex;gap:.75rem;justify-content:flex-end;margin-top:1rem">
+          <a href="/home.html" class="btn btn-outline">Cancel</a>
+          <button class="btn btn-primary" id="submit-btn" onclick="submitForm()">Submit Report</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /container -->
+
+  <script src="/js/app.js"></script>
+  <script>
+    Auth.redirectIfLoggedOut();
+    initNavbar();
+
+    let selectedType = null;
+
+    // Pre-select type from URL ?type=lost or ?type=found
+    const params = new URLSearchParams(window.location.search);
+    const urlType = params.get('type');
+    if (urlType === 'lost' || urlType === 'found') setType(urlType);
+
+    // Pre-fill today's date
+    document.getElementById('f-date').value = new Date().toISOString().slice(0,10);
+
+    // Pre-fill contact info from logged-in user
+    const user = Auth.getUser();
+    if (user) {
+      document.getElementById('f-contact-name').value  = user.name  || '';
+      document.getElementById('f-contact-email').value = user.email || '';
+    }
+
+    function setType(t) {
+      selectedType = t;
+      ['lost','found'].forEach(v => {
+        const btn = document.getElementById(`btn-${v}`);
+        btn.style.borderColor  = v === t ? 'var(--navy)'  : 'var(--border)';
+        btn.style.background   = v === t ? '#f0f4ff'      : '';
+      });
+      document.getElementById('type-err').textContent = '';
+
+      // Change location hint
+      document.getElementById('location-hint').textContent =
+        t === 'lost' ? 'Where you last had it.' : 'Where you found it.';
+
+      // Change page header
+      document.getElementById('page-title').textContent    = t === 'lost' ? 'Report a Lost Item' : 'Report a Found Item';
+      document.getElementById('page-subtitle').textContent = t === 'lost'
+        ? 'Fill in the details about the item you lost.'
+        : 'Fill in the details about the item you found.';
+
+      document.getElementById(`type-${t}`).checked = true;
+    }
+
+    function clearErrors() {
+      document.querySelectorAll('.form-error').forEach(e => e.textContent = '');
+      document.querySelectorAll('.field-error').forEach(e => e.classList.remove('field-error'));
+    }
+
+    function setErr(fieldId, errId, msg) {
+      document.getElementById(fieldId).classList.add('field-error');
+      document.getElementById(errId).textContent = msg;
+    }
+
+    function validate() {
+      let ok = true;
+
+      if (!selectedType) {
+        document.getElementById('type-err').textContent = 'Please select Lost or Found.';
+        ok = false;
+      }
+      if (!document.getElementById('f-title').value.trim()) {
+        setErr('f-title','f-title-err','Title is required.'); ok = false;
+      }
+      if (!document.getElementById('f-category').value) {
+        setErr('f-category','f-category-err','Please select a category.'); ok = false;
+      }
+      if (!document.getElementById('f-description').value.trim()) {
+        setErr('f-description','f-description-err','Description is required.'); ok = false;
+      }
+      if (!document.getElementById('f-location').value.trim()) {
+        setErr('f-location','f-location-err','Location is required.'); ok = false;
+      }
+      if (!document.getElementById('f-date').value) {
+        setErr('f-date','f-date-err','Date is required.'); ok = false;
+      }
+      if (!document.getElementById('f-contact-name').value.trim()) {
+        setErr('f-contact-name','f-contact-name-err','Contact name is required.'); ok = false;
+      }
+      const email = document.getElementById('f-contact-email').value.trim();
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        setErr('f-contact-email','f-contact-email-err','Valid email required.'); ok = false;
+      }
+
+      return ok;
+    }
+
+    async function submitForm() {
+      clearErrors();
+      if (!validate()) return;
+
+      const btn = document.getElementById('submit-btn');
+      btn.textContent = 'Submitting…'; btn.disabled = true;
+
+      const payload = {
+        type:          selectedType,
+        title:         document.getElementById('f-title').value.trim(),
+        category:      document.getElementById('f-category').value,
+        description:   document.getElementById('f-description').value.trim(),
+        location:      document.getElementById('f-location').value.trim(),
+        date_occurred: document.getElementById('f-date').value,
+        time_occurred: document.getElementById('f-time').value || null,
+        contact_name:  document.getElementById('f-contact-name').value.trim(),
+        contact_email: document.getElementById('f-contact-email').value.trim(),
+        contact_phone: document.getElementById('f-contact-phone').value.trim() || null,
+      };
+
+      const res = await API.post('/items', payload);
+
+      btn.textContent = 'Submit Report'; btn.disabled = false;
+
+      if (res.ok) {
+        showToast('Report submitted successfully!', 'success');
+        setTimeout(() => {
+          window.location.href = selectedType === 'lost' ? '/lost.html' : '/found.html';
+        }, 1200);
+      } else {
+        const msg = res.data.errors
+          ? res.data.errors.map(e => e.msg).join(' ')
+          : res.data.message;
+        document.getElementById('form-general-err').textContent = msg;
+        showToast(msg, 'error');
+      }
+    }
+  </script>
+</body>
+</html>
