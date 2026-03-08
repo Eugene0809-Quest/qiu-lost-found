@@ -13,6 +13,7 @@ const authRoutes  = require('./routes/auth');
 const itemRoutes  = require('./routes/items');
 
 const app  = express();
+app.set('trust proxy', 1); // ← ADD THIS LINE
 const PORT = process.env.PORT || 3000;
 
 // ─────────────────────────────────────────
