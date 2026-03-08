@@ -1,20 +1,32 @@
 require('dotenv').config();
 const mysql = require('mysql2/promise');
 
-const pool = mysql.createPool({
-  host:     process.env.DB_HOST,
-  port:     process.env.DB_PORT     || 3306,
-  user:     process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  waitForConnections: true,
-  connectionLimit:    10,
-  queueLimit:         0,
-  // SSL required for Railway MySQL
-  ssl: process.env.NODE_ENV === 'production'
-    ? { rejectUnauthorized: false }
-    : false
-});
+let poolConfig;
+
+if (process.env.MYSQL_URL) {
+  // Railway provides this automatically — use it directly
+  poolConfig = {
+    uri: process.env.MYSQL_URL,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0,
+    ssl: { rejectUnauthorized: false }
+  };
+} else {
+  // Local development
+  poolConfig = {
+    host:     process.env.DB_HOST,
+    port:     process.env.DB_PORT || 3306,
+    user:     process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
+  };
+}
+
+const pool = mysql.createPool(poolConfig);
 
 (async () => {
   try {
@@ -23,7 +35,6 @@ const pool = mysql.createPool({
     conn.release();
   } catch (err) {
     console.error('❌ MySQL connection failed:', err.message);
-    // Don't exit — let Railway restart gracefully
   }
 })();
 
