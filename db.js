@@ -1,32 +1,30 @@
 require('dotenv').config();
 const mysql = require('mysql2/promise');
 
-let poolConfig;
+const isProduction = process.env.NODE_ENV === 'production';
 
-if (process.env.MYSQL_URL) {
-  // Railway provides this automatically — use it directly
-  poolConfig = {
-    uri: process.env.MYSQL_URL,
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0,
-    ssl: { rejectUnauthorized: false }
-  };
-} else {
-  // Local development
-  poolConfig = {
-    host:     process.env.DB_HOST,
-    port:     process.env.DB_PORT || 3306,
-    user:     process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0
-  };
-}
-
-const pool = mysql.createPool(poolConfig);
+const pool = mysql.createPool(
+  isProduction
+    ? {
+        host:     process.env.DB_HOST,
+        port:     3306,
+        user:     process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME,
+        ssl:      { rejectUnauthorized: false },
+        waitForConnections: true,
+        connectionLimit:    10,
+      }
+    : {
+        host:     process.env.DB_HOST,
+        port:     process.env.DB_PORT || 3306,
+        user:     process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME,
+        waitForConnections: true,
+        connectionLimit:    10,
+      }
+);
 
 (async () => {
   try {
