@@ -36,11 +36,11 @@ app.use(helmet({
 }));
 
 // CORS — allow only same origin in production
+// ✅ REPLACE WITH THIS
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production'
-    ? process.env.FRONTEND_URL || false
-    : '*',
+  origin: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+  credentials: true,
 }));
 
 // Rate limiting — prevent brute-force attacks
