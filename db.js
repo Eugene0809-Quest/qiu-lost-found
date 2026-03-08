@@ -1,8 +1,5 @@
-// db.js — MySQL connection pool using environment variables
-// WHY: We use a pool (not single connection) so multiple users
-//      can query the DB at the same time without waiting.
-const mysql = require('mysql2/promise');
 require('dotenv').config();
+const mysql = require('mysql2/promise');
 
 const pool = mysql.createPool({
   host:     process.env.DB_HOST,
@@ -11,11 +8,14 @@ const pool = mysql.createPool({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   waitForConnections: true,
-  connectionLimit:    10,       // max 10 simultaneous queries
-  queueLimit:         0
+  connectionLimit:    10,
+  queueLimit:         0,
+  // SSL required for Railway MySQL
+  ssl: process.env.NODE_ENV === 'production'
+    ? { rejectUnauthorized: false }
+    : false
 });
 
-// Test the connection on startup
 (async () => {
   try {
     const conn = await pool.getConnection();
@@ -23,7 +23,7 @@ const pool = mysql.createPool({
     conn.release();
   } catch (err) {
     console.error('❌ MySQL connection failed:', err.message);
-    process.exit(1); // stop server if DB can't connect
+    // Don't exit — let Railway restart gracefully
   }
 })();
 
